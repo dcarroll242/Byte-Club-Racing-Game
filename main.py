@@ -1,9 +1,7 @@
 import pygame
+import window
 
 isRunning: bool = True
-
-SCREEN_WIDTH: int = 1600
-SCREEN_HEIGHT: int = 800
 
 def main():
     start()
@@ -12,16 +10,16 @@ def main():
     pygame.quit()
 
 def start():
-    pygame.init()
-    display = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    window.createWindow()
 
 def mainLoop():
     global isRunning
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            print("quit")
             isRunning = False
+
+    window.refreshWindow()
 
 if __name__ == '__main__':
     main()
