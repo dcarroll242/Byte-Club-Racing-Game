@@ -1,5 +1,5 @@
 import pygame
-import window
+from pygame_rendering import window
 
 isRunning: bool = True
 
