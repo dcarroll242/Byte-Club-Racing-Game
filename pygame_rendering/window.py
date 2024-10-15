@@ -1,4 +1,5 @@
 from __future__ import annotations
+from general_utils.vec2 import Vec2
 import pygame
 
 class Window:  # singleton class
@@ -31,3 +32,6 @@ def getWindow():
 
 def refreshWindow():
     getWindow().refresh()
+
+def getScreenSize():
+    return Vec2(getWindow().screenWidth, getWindow().screenHeight)
