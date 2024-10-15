@@ -1,4 +1,5 @@
 import pygame
+from events.event_handler import createPygameEventListener, broadcastPygameEvents
 from pygame_rendering import window
 
 isRunning: bool = True
@@ -12,14 +13,19 @@ def main():
 def start():
     window.createWindow()
 
+    createPygameEventListener(pygame.QUIT, stopProgram)
+
 def mainLoop():
     global isRunning
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            isRunning = False
+    broadcastPygameEvents(pygame.event.get())
 
     window.refreshWindow()
+
+def stopProgram():
+    global isRunning
+    isRunning = False
+
 
 if __name__ == '__main__':
     main()
