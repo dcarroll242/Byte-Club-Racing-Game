@@ -38,7 +38,6 @@ class AlignmentContainer(GUIContainer):
     def getChildOffset(self, child: GUIElement):
         alignment = self.getAlignmentOfChild(child)
 
-        # TODO: test this
         if alignment == "TOP_LEFT":
             return super().getChildOffset(child) + Vec2(0, 0)
         elif alignment == "TOP":

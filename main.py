@@ -8,6 +8,7 @@ from general_utils.vec2 import Vec2
 
 isRunning: bool = True
 rootGUI: RootContainer = None
+image: GUIImage = None
 
 def main():
     start()
@@ -22,18 +23,15 @@ def start():
 
     # create a gui to draw to (just to test)
     # NOTE: in the future, there will be a scene system so that you can easily switch between GUIs and also render the game world
-    global rootGUI
+    global rootGUI, image
     rootGUI = RootContainer()
     alignmentContainer = AlignmentContainer()
 
-    image = GUIImage("sprites/SpriteTest.png", Vec2(100, 100), size=Vec2(160, 160))
-    image2 = GUIImage("sprites/SpriteTest.png", Vec2(500, 100), size=Vec2(160, 160), rotation=200)
-    image3 = GUIImage("sprites/SpriteTest.png", size=Vec2(320, 640))
+    image = GUIImage("sprites/SpriteTest.png")
+    image.image.scaleBy(Vec2(40, 40))
 
     rootGUI.addChild(alignmentContainer)
     alignmentContainer.addChild(image, "TOP_LEFT")
-    alignmentContainer.addChild(image2, "TOP_LEFT")
-    alignmentContainer.addChild(image3, "BR")
 
 
 def mainLoop():
@@ -45,6 +43,10 @@ def mainLoop():
     broadcastPygameEvents(pygame.event.get())
 
     window.refreshWindow()
+
+    # testing stuff
+    image.image.rotateBy(1)
+
 
 def stopProgram():
     global isRunning

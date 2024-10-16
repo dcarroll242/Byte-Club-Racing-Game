@@ -9,9 +9,13 @@ class Image:
     def __init__(self, filePath: str, rotation: float = 0.0, size: Vec2 = None):
         if filePath not in images.keys():
             images[filePath] = pygame.image.load(filePath)
-        self.image = images[filePath]#.copy()
+
+        self.originalImage = images[filePath]
+        self.scaledImage = images[filePath]
+        self.image = images[filePath]
 
         self.__size = size
+        self.__rotation = rotation
 
         if size is not None:
             self.image = pygame.transform.scale(self.image, size.asTuple())
@@ -27,18 +31,32 @@ class Image:
 
     def scaleTo(self, size: Vec2):
         self.__size = size
-        self.image = pygame.transform.scale(self.image, size.asTuple())
+        self.updateImageTransformation()
+
 
     def scaleBy(self, scale: Vec2):
         self.__size *= scale
-        self.image = pygame.transform.scale_by(self.image, scale.asTuple())
+        self.updateImageTransformation()
+
 
     def rotateBy(self, rotation: float):
-        self.image = pygame.transform.rotate(self.image, rotation)
+        self.__rotation += rotation
+        self.updateImageRotation()
+
+    def rotateTo(self, rotation: float):
+        self.__rotation = rotation
+        self.updateImageRotation()
+
+    def updateImageRotation(self):
+        self.image = pygame.transform.rotate(self.scaledImage, self.__rotation)
+
+    def updateImageTransformation(self):
+        self.scaledImage = pygame.transform.scale(self.originalImage, self.__size.asTuple())
+        self.updateImageRotation()
 
     def getRect(self, offset: Vec2 = Vec2()):
         rect = self.image.get_rect()
-        rect.topleft = offset.asTuple()
+        rect.center = (offset + self.__size / 2.0).asTuple()
         return rect
 
     def getSize(self):
