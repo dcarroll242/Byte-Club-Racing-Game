@@ -1,5 +1,6 @@
 import pygame
 from general_utils.vec2 import Vec2
+from general_utils.rect import Rect
 from pygame_rendering.window import getWindow
 
 images: dict[str, pygame.surface.Surface] = dict()
@@ -29,15 +30,25 @@ class Image:
     def blitAt(self, pos: Vec2):
         getWindow().display.blit(self.image, self.getRect(pos))
 
+    def blitAtCropped(self, pos: Vec2, boundingBox: Rect):
+        if (pos.x + self.__size.x <= boundingBox.getX() + boundingBox.size.x and pos.x >= boundingBox.getX() and
+                pos.y + self.__size.y <= boundingBox.getY() + boundingBox.size.y and pos.y >= boundingBox.getY()):
+            self.blitAt(pos)
+        elif not (pos.x + self.__size.x < boundingBox.getX() or pos.x > boundingBox.getX() + boundingBox.size.x or
+                pos.y + self.__size.y < boundingBox.getY() or pos.y > boundingBox.getY() + boundingBox.size.y):
+            pass
+            # MAKE IT CROPPED AAAA
+            # rect = Rect(Vec2(max(pos.x, boundingBox.getX()), max(pos.y, boundingBox.getY())), Vec2)
+        else:
+            pass
+
     def scaleTo(self, size: Vec2):
         self.__size = size
         self.updateImageTransformation()
 
-
     def scaleBy(self, scale: Vec2):
         self.__size *= scale
         self.updateImageTransformation()
-
 
     def rotateBy(self, rotation: float):
         self.__rotation += rotation

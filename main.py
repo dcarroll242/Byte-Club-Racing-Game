@@ -1,3 +1,6 @@
+import time
+
+import math
 import pygame
 from events.event_handler import createPygameEventListener, broadcastPygameEvents
 from pygame_rendering import window
@@ -6,9 +9,14 @@ from guis.container_guis import AlignmentContainer
 from guis.image_guis import GUIImage
 from general_utils.vec2 import Vec2
 
+from pygame_rendering.window import getWindow
+
+from pygame_rendering.images import Image
+
 isRunning: bool = True
 rootGUI: RootContainer = None
 image: GUIImage = None
+testImage: Image = None
 
 def main():
     start()
