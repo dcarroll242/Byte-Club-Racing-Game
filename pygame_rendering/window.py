@@ -2,36 +2,22 @@ from __future__ import annotations
 from general_utils.vec2 import Vec2
 import pygame
 
-class Window:  # singleton class
+SCREEN_WIDTH = 1600
+SCREEN_HEIGHT = 800
 
-    window: Window = None
+BACKGROUND_COLOR = "black"
 
-    def __init__(self):
-        assert Window.window is None, "Window already created, try using 'Window.getWindow'"
-
-        self.screenWidth = 1600
-        self.screenHeight = 800
-
-        self.backgroundColor = "black"
-
-        pygame.init()
-
-        self.display = pygame.display.set_mode((self.screenWidth, self.screenHeight))
-
-    def refresh(self):
-        pygame.display.update()
-        self.display.fill(self.backgroundColor)
+display: pygame.Surface = None
 
 def createWindow():
-    if Window.window is None:
-        Window.window = Window()
-
-def getWindow():
-    createWindow()
-    return Window.window
+    global display
+    if display is None:
+        pygame.init()
+        display = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 def refreshWindow():
-    getWindow().refresh()
+    pygame.display.update()
+    display.fill(BACKGROUND_COLOR)
 
 def getScreenSize():
-    return Vec2(getWindow().screenWidth, getWindow().screenHeight)
+    return Vec2(SCREEN_WIDTH, SCREEN_HEIGHT)
