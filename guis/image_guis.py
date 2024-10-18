@@ -10,3 +10,9 @@ class GUIImage(GUIElement):
 
     def draw(self):
         self.image.blitAt(self.getAbsolutePosition())
+
+    def setSize(self, size: Vec2):
+        self.image.scaleTo(size)
+
+    def getSize(self):
+        return self.image.getSize()

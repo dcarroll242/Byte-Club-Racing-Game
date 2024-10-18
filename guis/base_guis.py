@@ -7,7 +7,7 @@ class GUIElement(ABC):
 
     def __init__(self, size: Vec2 = Vec2(), relativePos: Vec2 = Vec2(0, 0), visible: bool = True):
         self.relativePos = relativePos
-        self.size = size
+        self.__size = size
         self.visible = visible
         self.parent: GUIContainer | type(None) = None
 
@@ -26,6 +26,12 @@ class GUIElement(ABC):
 
     def getVisible(self) -> bool:
         return self.visible
+
+    def setSize(self, size: Vec2):
+        self.__size = size
+
+    def getSize(self):
+        return self.__size
 
     # TODO: create an absolutePosition field that gets updated with relative
     #  positions so that this doesn't need to called every frame for every image

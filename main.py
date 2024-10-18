@@ -1,3 +1,5 @@
+import time
+
 import pygame
 from events.event_handler import createPygameEventListener, broadcastPygameEvents
 from pygame_rendering import window
@@ -33,7 +35,7 @@ def start():
     image.image.scaleBy(Vec2(40, 40))
 
     rootGUI.addChild(alignmentContainer)
-    alignmentContainer.addChild(image, "TOP_LEFT")
+    alignmentContainer.addChild(image, "CENTER")
 
 
 def mainLoop():

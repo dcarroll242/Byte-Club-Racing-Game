@@ -41,20 +41,20 @@ class AlignmentContainer(GUIContainer):
         if alignment == "TOP_LEFT":
             return super().getChildOffset(child) + Vec2(0, 0)
         elif alignment == "TOP":
-            return super().getChildOffset(child) + Vec2((self.size.x - child.size.x) / 2, 0)
+            return super().getChildOffset(child) + Vec2((self.getSize().x - child.getSize().x) / 2, 0)
         elif alignment == "TOP_RIGHT":
-            return super().getChildOffset(child) + Vec2(self.size.x - child.size.x, 0)
+            return super().getChildOffset(child) + Vec2(self.getSize().x - child.getSize().x, 0)
         elif alignment == "LEFT":
-            return super().getChildOffset(child) + Vec2(0, self.size.y - child.size.y / 2)
+            return super().getChildOffset(child) + Vec2(0, self.getSize().y - child.getSize().y / 2)
         elif alignment == "CENTER":
-            return super().getChildOffset(child) + Vec2((self.size.x - child.size.x) / 2, (self.size.y - child.size.y) / 2)
+            return super().getChildOffset(child) + Vec2((self.getSize().x - child.getSize().x) / 2, (self.getSize().y - child.getSize().y) / 2)
         elif alignment == "RIGHT":
-            return super().getChildOffset(child) + Vec2(self.size.x - child.size.x, (self.size.y - child.size.y) / 2)
+            return super().getChildOffset(child) + Vec2(self.getSize().x - child.getSize().x, (self.getSize().y - child.getSize().y) / 2)
         elif alignment == "BOTTOM_LEFT":
-            return super().getChildOffset(child) + Vec2(0, self.size.y - child.size.y)
+            return super().getChildOffset(child) + Vec2(0, self.getSize().y - child.getSize().y)
         elif alignment == "BOTTOM":
-            return super().getChildOffset(child) + Vec2((self.size.x - child.size.x) / 2, self.size.y - child.size.y)
+            return super().getChildOffset(child) + Vec2((self.getSize().x - child.getSize().x) / 2, self.getSize().y - child.getSize().y)
         elif alignment == "BOTTOM_RIGHT":
-            return super().getChildOffset(child) + Vec2(self.size.x - child.size.x, self.size.y - child.size.y)
+            return super().getChildOffset(child) + Vec2(self.getSize().x - child.getSize().x, self.getSize().y - child.getSize().y)
         else:
             raise Exception("Not valid alignment: " + alignment)
