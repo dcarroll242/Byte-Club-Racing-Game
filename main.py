@@ -31,6 +31,8 @@ def start():
     rootGUI = RootContainer()
     alignmentContainer = AlignmentContainer()
 
+    print("example change")
+
     image = GUIImage("sprites/SpriteTest.png")
     image.image.scaleBy(Vec2(40, 40))
 
