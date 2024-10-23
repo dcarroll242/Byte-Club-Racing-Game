@@ -27,20 +27,34 @@ class Image:
         if rotation != 0.0:
             self.image = pygame.transform.rotate(self.image, rotation)
 
-    def blitAt(self, pos: Vec2):
-        window.display.blit(self.image, self.getRect(pos))
+    def blitAt(self, pos: Vec2, cull: bool = True, cullRect: Rect = None):
+        if cull:
+
+            if cullRect is None:
+                cullRect = Rect(Vec2(0.0, 0.0), window.getScreenSize())
+
+            if cullRect.isRectInside(self.getRect(pos)):
+                window.display.blit(self.image, self.getRect(pos).toPygameRect())
+
+        else:
+
+            window.display.blit(self.image, self.getRect(pos).toPygameRect())
 
     def blitAtCropped(self, pos: Vec2, boundingBox: Rect):
-        if (pos.x + self.__size.x <= boundingBox.getX() + boundingBox.size.x and pos.x >= boundingBox.getX() and
-                pos.y + self.__size.y <= boundingBox.getY() + boundingBox.size.y and pos.y >= boundingBox.getY()):
-            self.blitAt(pos)
-        elif not (pos.x + self.__size.x < boundingBox.getX() or pos.x > boundingBox.getX() + boundingBox.size.x or
-                pos.y + self.__size.y < boundingBox.getY() or pos.y > boundingBox.getY() + boundingBox.size.y):
-            pass
-            # MAKE IT CROPPED AAAA
-            # rect = Rect(Vec2(max(pos.x, boundingBox.getX()), max(pos.y, boundingBox.getY())), Vec2)
-        else:
-            pass
+
+        if boundingBox.isRectInside(self.getRect(pos)):
+            # if it's completely inside the bounding box just draw it
+            window.display.blit(self.image, self.getRect(pos).toPygameRect())
+
+        elif boundingBox.isRectColliding(self.getRect(pos)):
+
+            # get a new rect from the parts of this image and the bounding box that overlap
+            rect = Rect.fromCornersValues(max(pos.x, boundingBox.getX()), max(pos.y, boundingBox.getY()),
+                                          min(pos.x + self.getSize().x, boundingBox.getX() + boundingBox.getWidth()) - 1.0,
+                                          min(pos.y + self.getSize().y, boundingBox.getY() + boundingBox.getHeight()) - 1.0).toPygameRect()
+
+            window.display.blit(self.image.subsurface(rect), rect)
+        # if it's not even colliding with the bounding box don't do anything
 
     def scaleTo(self, size: Vec2):
         self.__size = size
@@ -68,7 +82,7 @@ class Image:
     def getRect(self, offset: Vec2 = Vec2()):
         rect = self.image.get_rect()
         rect.center = (offset + self.__size / 2.0).asTuple()
-        return rect
+        return Rect.fromPygameRect(rect)
 
     def getSize(self):
         return self.__size
