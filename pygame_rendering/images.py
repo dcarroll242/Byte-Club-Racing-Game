@@ -65,11 +65,11 @@ class Image:
         self.updateImageTransformation()
 
     def rotateBy(self, rotation: float):
-        self.__rotation += rotation
+        self.__rotation = (self.__rotation + rotation) % 360
         self.updateImageRotation()
 
     def rotateTo(self, rotation: float):
-        self.__rotation = rotation
+        self.__rotation = rotation % 360
         self.updateImageRotation()
 
     def updateImageRotation(self):
@@ -86,3 +86,6 @@ class Image:
 
     def getSize(self):
         return self.__size
+
+    def getRotation(self):
+        return self.__rotation

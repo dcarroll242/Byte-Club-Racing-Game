@@ -8,6 +8,9 @@ class Rect:
         self.topLeft = topLeft
         self.size = size
 
+    def __repr__(self):
+        return f"Rect({self.topLeft}, {self.size})"
+
     @staticmethod
     def fromValues(x, y, width, height):
         return Rect(Vec2(x, y), Vec2(width, height))
@@ -34,10 +37,10 @@ class Rect:
         return self.isPointInside(rect.topLeft) and self.isPointInside(rect.topLeft + rect.size - Vec2(1.0, 1.0))
 
     def isRectColliding(self, rect: Rect):
-        return (self.isPointInside(rect.topLeft) or self.isPointInside(rect.topLeft + rect.size - Vec2(1.0, 1.0)) or
-                self.isPointInside(Vec2(rect.getX() + rect.getWidth() - 1.0, rect.getY())) or
-                self.isPointInside(Vec2(rect.getX(), rect.getY() + rect.getHeight() - 1.0)) or
-                rect.isPointInside(self.topLeft))
+        return (self.topLeft.x < rect.topLeft.x + rect.size.x - 1.0 and
+                self.topLeft.x + self.size.x - 1.0 > rect.topLeft.x and
+                self.topLeft.y < rect.topLeft.y + rect.size.y - 1.0 and
+                self.topLeft.y + self.size.y - 1.0 > rect.topLeft.y)
 
     def getX(self):
         return self.topLeft.x
