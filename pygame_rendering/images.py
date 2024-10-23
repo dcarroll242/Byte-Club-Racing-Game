@@ -33,7 +33,7 @@ class Image:
             if cullRect is None:
                 cullRect = Rect(Vec2(0.0, 0.0), window.getScreenSize())
 
-            if cullRect.isRectInside(self.getRect(pos)):
+            if cullRect.isRectColliding(self.getRect(pos)):
                 window.display.blit(self.image, self.getRect(pos).toPygameRect())
 
         else:

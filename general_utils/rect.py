@@ -36,7 +36,8 @@ class Rect:
     def isRectColliding(self, rect: Rect):
         return (self.isPointInside(rect.topLeft) or self.isPointInside(rect.topLeft + rect.size - Vec2(1.0, 1.0)) or
                 self.isPointInside(Vec2(rect.getX() + rect.getWidth() - 1.0, rect.getY())) or
-                self.isPointInside(Vec2(rect.getX(), rect.getY() + rect.getHeight() - 1.0)))
+                self.isPointInside(Vec2(rect.getX(), rect.getY() + rect.getHeight() - 1.0)) or
+                rect.isPointInside(self.topLeft))
 
     def getX(self):
         return self.topLeft.x
