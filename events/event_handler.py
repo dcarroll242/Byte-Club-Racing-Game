@@ -14,10 +14,12 @@ class PygameEventListener:
         self.onEvent(*self.onEventArgs)
 
 def createPygameEventListener(eventToListenFor: int, onEvent: callable, *args):
+    listener = PygameEventListener(eventToListenFor, onEvent, *args)
     if eventToListenFor not in pygameEventListeners.keys():
-        pygameEventListeners[eventToListenFor] = [PygameEventListener(eventToListenFor, onEvent, *args)]
+        pygameEventListeners[eventToListenFor] = [listener]
     else:
-        pygameEventListeners[eventToListenFor].append(PygameEventListener(eventToListenFor, onEvent, *args))
+        pygameEventListeners[eventToListenFor].append(listener)
+    return listener
 
 def broadcastPygameEvents(events: list[pygame.event.EventType]):
     for event in events:
