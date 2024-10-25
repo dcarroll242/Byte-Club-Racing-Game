@@ -6,8 +6,17 @@ VALID_ALIGNMENTS = ("TOP_LEFT", "TOP", "TOP_RIGHT", "LEFT", "CENTER", "RIGHT", "
 ALIGNMENT_SHORTHANDS = ("TL", "T", "TR", "L", "C", "R", "BL", "B", "BR")
 
 class AlignmentContainer(GUIContainer):
+    """Alignment Container to align child elements to corners, faces, or the center of this container
 
-    def __init__(self, size: Vec2 = window.getScreenSize(), relativePos: Vec2 = Vec2(0, 0), visible: bool = True, children: list[GUIElement] = None, childrenAlignments: list[str] = None):
+    Will align the edge of the element to the edge of this container
+    (for example, if the alignment was TOP_RIGHT the top right of the element would be the same as the top right of this container)
+    If not aligned to a corner (for example if the alignment was BOTTOM), then the centers would be aligned
+    (the middle X of the element would be the same as the middle X of this container)
+    """
+
+    def __init__(self, size: Vec2 = None, relativePos: Vec2 = Vec2(0.0, 0.0), visible: bool = True, children: list[GUIElement] = None, childrenAlignments: list[str] = None):
+        if size is None:
+            size = window.getScreenSize()
         super().__init__(size, relativePos, visible, children)
         if childrenAlignments is None:
             childrenAlignments = []
@@ -36,6 +45,9 @@ class AlignmentContainer(GUIContainer):
         return self.childrenAlignments[self.children.index(child)]
 
     def getChildOffset(self, child: GUIElement):
+        """return the offset of a specific child
+
+        calculates the offset of a child based on its offset and returns it"""
         alignment = self.getAlignmentOfChild(child)
 
         if alignment == "TOP_LEFT":
